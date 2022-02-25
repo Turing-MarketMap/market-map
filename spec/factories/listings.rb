@@ -8,7 +8,7 @@ FactoryBot.define do
     transmission { Faker::Vehicle.transmission }
     vin { Faker::Vehicle.vin }
     state { Faker::Address.state_abbr }
-    condition { Faker::Vehicle.} 
+    condition { Faker::Number.between(from: 0.0, to: 5.0) } 
     odometer { Faker::Vehicle.milage }
     color { Faker::Vehicle.color }
     interior { Faker::Lorem.sentence }
