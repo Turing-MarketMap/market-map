@@ -61,4 +61,11 @@ RSpec.describe Listing do
     camrys = Listing.filter_by_model("Camry")
     expect(camrys.count).to eq(1)
   end
+
+  it 'can filter by year, make, model' do
+    camry = Listing.filter_by_year_make_model(2001, 2001, "Toyota", "Camry")
+    camry_2002 = Listing.filter_by_year_make_model(2002, 2002, "Toyota", "Camry")
+    expect(camry.count).to eq(1)
+    expect(camry_2002.count).to eq(0)
+  end
 end
