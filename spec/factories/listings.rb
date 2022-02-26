@@ -12,6 +12,7 @@ FactoryBot.define do
     odometer { Faker::Vehicle.mileage }
     color { Faker::Vehicle.color }
     interior { Faker::Lorem.sentence }
-    sellingprice { Faker::Number.within(range: 20000..40000) * ((250000 - odometer ) / 250000.0).to_i } # Deprecate value based on mileage for more realistic fake prices
+    sellingprice { Faker::Number.within(range: 2000..40000) }
+    # sellingprice { Faker::Number.within(range: 20000..40000) * ((250000 - odometer ) / 250000.0).to_i } # Deprecate value based on mileage for more realistic fake prices
   end
 end
