@@ -39,17 +39,26 @@ RSpec.describe Listing do
   end
 
   it 'can filter by year' do
-    filtered = Listing.filter_by_year(2003,2006)
-    expect(filtered.count).to eq(4)
+    filtered_1 = Listing.filter_by_year(2003,2006)
+    expect(filtered_1.count).to eq(4)
+
+    filtered_2 = Listing.filter_by_year(2002,2002)
+    expect(filtered_2.count).to eq(1)
   end
 
   it 'can filter by make' do
     fords = Listing.filter_by_make("Ford")
     expect(fords.count).to eq(5)
+
+    chevrolets = Listing.filter_by_make("Chevrolet")
+    expect(chevrolets.count).to eq(2)
   end
 
   it 'can filter by model' do
     f150s = Listing.filter_by_model("F-150")
     expect(f150s.count).to eq(2)
+
+    camrys = Listing.filter_by_model("Camry")
+    expect(camrys.count).to eq(1)
   end
 end
