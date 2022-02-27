@@ -68,4 +68,30 @@ RSpec.describe Listing do
     expect(camry.count).to eq(1)
     expect(camry_2002.count).to eq(0)
   end
+
+  it 'can use scope to filter by year' do
+    filtered_1 = Listing.scope_filter_by_year(2003,2006)
+    expect(filtered_1.count).to eq(4)
+
+    filtered_2 = Listing.filter_by_year(2002,2002)
+    expect(filtered_2.count).to eq(1)
+  end
+
+  it 'can use scope to filter by make' do
+    fords = Listing.scope_filter_by_make("Ford")
+    expect(fords.count).to eq(5)
+  end
+
+  it 'can use scope to filter by model' do
+    f150s = Listing.scope_filter_by_model("F-150")
+    expect(f150s.count).to eq(2)
+
+    camrys = Listing.filter_by_model("Camry")
+    expect(camrys.count).to eq(1)
+  end
+
+  it 'can chain scopes - all params are included' do
+    camry = Listing.scope_filter_by_year(2001,2001).scope_filter_by_make("Toyota").scope_filter_by_model("Camry")
+    expect(camry.count).to eq(1)
+  end
 end
