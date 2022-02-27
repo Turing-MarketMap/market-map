@@ -14,7 +14,10 @@ task :import_listings_csv => [:environment] do
       transmission = row[5]
       vin = row[6]
       state = row[7]
-      condition = row[8]
+      condition = row[8] 
+      if condition.class != Float
+        condition = 0
+      end
       odometer = row[9]
       color = row[10]
       interior = row[11]
