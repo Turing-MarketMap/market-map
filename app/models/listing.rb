@@ -3,9 +3,11 @@ class Listing < ApplicationRecord
   scope :scope_filter_by_year, ->(min_year, max_year) {
     where(year: min_year..max_year)
   }
+
   scope :scope_filter_by_make, ->(make) {
     where(make: make)
   }
+  
   scope :scope_filter_by_model, ->(model) {
     where(model: model)
   }
