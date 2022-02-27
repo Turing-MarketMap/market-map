@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Listing do
   before(:each) do
-    # @listing = create(:listing)
-
     @listing_1 = create(:listing, year: 2001, make: "Toyota", model: "Camry")
     @listing_2 = create(:listing, year: 2002, make: "Toyota", model: "4Runner")
     @listing_3 = create(:listing, year: 2003, make: "Toyota", model: "Tundra")
@@ -14,13 +12,38 @@ RSpec.describe Listing do
     @listing_8 = create(:listing, year: 2008, make: "Ford", model: "Focus")
     @listing_9 = create(:listing, year: 2009, make: "Ford", model: "Escape")
     @listing_10 = create(:listing, year: 2010, make: "Ford", model: "Escape")
-
   end
 
+  describe 'relationships' do
+    it { should have_many(:user_listings) }
+    it { should have_many(:users).through(:user_listings) }
+  end
+
+  describe 'validations' do
+    it { should validate_presence_of :year }
+    it { should validate_numericality_of(:year).only_integer.is_greater_than(0) }
+    it { should validate_presence_of :make }
+    it { should validate_presence_of :model }
+    it { should validate_presence_of :trim }
+    it { should validate_presence_of :body }
+    it { should validate_presence_of :transmission }
+    it { should validate_presence_of :vin }
+    it { should validate_presence_of :state }
+    it { should validate_presence_of :condition }
+    it { should validate_numericality_of(:condition).is_greater_than_or_equal_to(0) }
+    it { should validate_numericality_of(:condition).is_less_than_or_equal_to(5) }
+    it { should validate_presence_of :odometer }
+    it { should validate_numericality_of(:odometer).only_integer.is_greater_than(0) }
+    it { should validate_presence_of :color }
+    it { should validate_presence_of :interior }
+    it { should validate_presence_of :sellingprice }
+    it { should validate_numericality_of(:sellingprice).only_integer.is_greater_than(0) }
+  end
+  
   it 'exists' do
     expect(@listing_1).to be_a(Listing)
   end
-
+  
   it 'has attributes' do
     expect(@listing_1.id).to be_a(Integer)
     expect(@listing_1.year).to be_a(Integer)

@@ -9,10 +9,15 @@ RSpec.describe User do
     expect(@user).to be_a(User)
   end
 
-  it 'has attributes' do
-    expect(@user.id).to be_a(Integer)
-    expect(@user.email).to be_a(String)
-    expect(@user.first_name).to be_a(String)
-    expect(@user.last_name).to be_a(String)
+  describe 'relationships' do
+    it { should have_many(:user_listings) }
+    it { should have_many(:listings).through(:user_listings) }
+  end
+
+  describe 'validations' do
+    it { should validate_presence_of :first_name }
+    it { should validate_presence_of :last_name }
+    it { should validate_presence_of :email }
+    it { should validate_uniqueness_of(:email) }
   end
 end
