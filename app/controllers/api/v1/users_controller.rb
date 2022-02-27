@@ -1,21 +1,20 @@
-class Api::V1::UsersController < ApplicationController 
-  def create 
+class Api::V1::UsersController < ApplicationController
+  before_action :find_user, only: :destroy
+
+  #can we wrap the login feature into this as well? Does the session get created
+  # here or on the front end?
+  def create
     user = User.new(user_params)
 
     if user.save 
       json_response(UserSerializer.new(user), :created)
     else
-      render json: user.errors, status: :unprocessable
+      json_response(user.errors, :unprocessable_entity)
     end
   end
 
-  def update 
-    @user.update!(user_params)
-    json_response(UserSerializer.new(@user))
-  end
-
   def destroy 
-
+    @user.destroy
   end
 
   private 
@@ -24,6 +23,6 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def find_user 
-      @user = User.find_by(email: params[:email])
+      @user = User.find(params[:id])
     end
 end
