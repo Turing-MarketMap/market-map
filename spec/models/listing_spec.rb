@@ -9,20 +9,29 @@ RSpec.describe Listing do
     expect(@listing).to be_a(Listing)
   end
 
-  it 'has attributes' do
-    expect(@listing.id).to be_a(Integer)
-    expect(@listing.year).to be_a(Integer)
-    expect(@listing.make).to be_a(String)
-    expect(@listing.model).to be_a(String)
-    expect(@listing.trim).to be_a(String)
-    expect(@listing.body).to be_a(String)
-    expect(@listing.transmission).to be_a(String)
-    expect(@listing.vin).to be_a(String)
-    expect(@listing.state).to be_a(String)
-    expect(@listing.condition).to be_a(String)
-    expect(@listing.odometer).to be_a(Integer)
-    expect(@listing.color).to be_a(String)
-    expect(@listing.interior).to be_a(String)
-    expect(@listing.sellingprice).to be_a(Integer)
+  describe 'relationships' do
+    it { should have_many(:user_listings) }
+    it { should have_many(:users).through(:user_listings) }
+  end
+
+  describe 'validations' do
+    it { should validate_presence_of :year }
+    it { should validate_numericality_of(:year).only_integer.is_greater_than(0) }
+    it { should validate_presence_of :make }
+    it { should validate_presence_of :model }
+    it { should validate_presence_of :trim }
+    it { should validate_presence_of :body }
+    it { should validate_presence_of :transmission }
+    it { should validate_presence_of :vin }
+    it { should validate_presence_of :state }
+    it { should validate_presence_of :condition }
+    it { should validate_numericality_of(:condition).is_greater_than_or_equal_to(0) }
+    it { should validate_numericality_of(:condition).is_less_than_or_equal_to(5) }
+    it { should validate_presence_of :odometer }
+    it { should validate_numericality_of(:odometer).only_integer.is_greater_than(0) }
+    it { should validate_presence_of :color }
+    it { should validate_presence_of :interior }
+    it { should validate_presence_of :sellingprice }
+    it { should validate_numericality_of(:sellingprice).only_integer.is_greater_than(0) }
   end
 end
