@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       resources :listings
 
       # may need to update these routes to utilize sessions properly
-      resources :users do 
+      resources :users, only: [:create, :destroy] do 
         resources :listings, only: :index
       end
     end
