@@ -8,8 +8,79 @@
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
+## Background & Description:
 
+"MarketMap" is a group project built over the course of two weeks in Turing's module 3 backend program. This project is a branch of Turing's Consultancy project. We pitched a rough concept of creating an application that would let a user search for cars and enable them to know if they were getting a good deal based on several factors. See below for more details on the backend features.
 
+## Backend Features:
+
+## Learning Goals
+- Practice exposing API's.
+- Practice consuming API's
+- Build a project with Service Oriented Architecture (SOA)
+
+## Requirements and Setup (for Mac):
+### Ruby and Rails
+- Ruby -V 2.7.2
+- Rails -V 5.2.6
+
+### Gems Utilized
+- rspec
+- pry
+- simplecov
+- factory_bot_rails
+- faker
+- jsonapi-serializer
+
+### Setup
+1. Fork and/or Clone this Repo from GitHub.
+2. In your terminal use `$ git clone <ssh or https path>`
+3. Change into the cloned directory using `$ cd market-map`
+4. Install the gem packages using `$ bundle install`
+5. Database Migrations can be setup by running:
+```shell
+$ rails rake db:{drop,create,migrate,seed}
+```
+6. Populate the database using `$ rake import_listings_csv`
+7. Startup and Access require the server to be running locally and a web browser opened.
+  - Start Server
+```shell
+$ rails s
+```
+ - Open Web Broswer and visit http://localhost:3000/
+   - Please visit below endpoints to see JSON data being exposed
+
+## Testing
+ - Test using the terminal utilizing RSpec
+ ```shell
+ $ rspec spec/<follow directory path to test specific files>
+ ```
+   or test the whole suite with `$ rspec`
+
+## Endpoints
+### Listings
+### Users
+#### Create a User
+This endpoint should:
+ - Check to see if the user exists in the db or not
+ - It will find or create a record and render a JSON representation of the User record
+ - Endpoint is `POST /api/v1/users`
+ - accept the following JSON body with only the following fields:
+```json
+{
+  "first_name": "John",
+  "last_name": "Doe",
+  "email": "jdoe@gmail.com"
+}
+ ```
+ 
+#### Destroy a User
+This endpoint should:
+ - Destroy the corresponding record (if found) and any associated data
+ - NOT return any JSON body at all, and should return a 204 HTTP status code
+
+## Further Project Information
+ - [Turing Project Details](https://backend.turing.edu/module3/projects/consultancy/)
 
 ## **Contributors** ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
