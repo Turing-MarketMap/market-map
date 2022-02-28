@@ -2,7 +2,7 @@ require 'csv'
 
 desc "Import listings from csv"
 task :import_listings_csv => [:environment] do
-  file = "db/data/clean_car_prices.csv"
+  file = "db/data/cleaned_car_prices.csv"
 
   CSV.foreach(file, :headers => true) do |row|
 
@@ -14,7 +14,7 @@ task :import_listings_csv => [:environment] do
       transmission = row[5]
       vin = row[6]
       state = row[7]
-      condition = row[8].to_f 
+      condition = row[8].to_f
       odometer = row[9]
       color = row[10]
       interior = row[11]
