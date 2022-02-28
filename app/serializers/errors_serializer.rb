@@ -1,5 +1,4 @@
 class ErrorsSerializer
-  include JSONAPI::Serializer
 
   {
         "errors": [
