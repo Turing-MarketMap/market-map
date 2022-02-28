@@ -16,7 +16,7 @@ class Listing < ApplicationRecord
   scope :scope_filter_by_make, ->(make) {
     where(make: make)
   }
-  
+
   scope :scope_filter_by_model, ->(model) {
     where(model: model)
   }

@@ -9,7 +9,7 @@ FactoryBot.define do
     vin { Faker::Vehicle.vin }
     state { Faker::Address.state_abbr }
     condition { Faker::Number.between(from: 0.0, to: 5.0).round(2) }
-    odometer { Faker::Vehicle.mileage }
+    odometer { Faker::Number.between(from: 0, to: 250000) }
     color { Faker::Vehicle.color }
     interior { Faker::Lorem.sentence }
     sellingprice { Faker::Number.within(range: 2000..40000) }

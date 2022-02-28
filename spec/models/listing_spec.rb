@@ -39,11 +39,11 @@ RSpec.describe Listing do
     it { should validate_presence_of :sellingprice }
     it { should validate_numericality_of(:sellingprice).only_integer.is_greater_than(0) }
   end
-  
+
   it 'exists' do
     expect(@listing_1).to be_a(Listing)
   end
-  
+
   it 'has attributes' do
     expect(@listing_1.id).to be_a(Integer)
     expect(@listing_1.year).to be_a(Integer)
@@ -54,7 +54,7 @@ RSpec.describe Listing do
     expect(@listing_1.transmission).to be_a(String)
     expect(@listing_1.vin).to be_a(String)
     expect(@listing_1.state).to be_a(String)
-    expect(@listing_1.condition).to be_a(String)
+    expect(@listing_1.condition).to be_a(Float)
     expect(@listing_1.odometer).to be_a(Integer)
     expect(@listing_1.color).to be_a(String)
     expect(@listing_1.interior).to be_a(String)
