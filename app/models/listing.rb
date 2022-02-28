@@ -21,6 +21,17 @@ class Listing < ApplicationRecord
     where(model: model)
   }
 
+
+  # def self.super_scope(min_year=nil, max_year=nil, make=nil, model=nil)
+  #   # filters = [min_year, max_year, make, model]
+  #   # binding.pry
+  #   # parameters_filter = filters[0].map do |p|
+  #   #   p =! nil
+  #   # end
+  #
+  #   Listing.scope_filter_by_year(min_year, max_year).scope_filter_by_make(make).scope_filter_by_model(model).unscope(where: make, model)
+  # end
+
   def self.filter_by_year(min_year, max_year)
     Listing.where(year: min_year..max_year)
   end
@@ -33,7 +44,7 @@ class Listing < ApplicationRecord
     Listing.where(model: model)
   end
 
-  def self.filter_by_year_make_model(min_year, max_year, make, model)
-    Listing.where(year: min_year..max_year, make: make, model: model)
+  def self.filter_by_year_make_model(search_params)
+    Listing.where(year: search_params[:min_year]..search_params[:max_year], make: search_params[:make], model: search_params[:model])
   end
 end

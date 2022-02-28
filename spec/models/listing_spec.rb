@@ -86,10 +86,14 @@ RSpec.describe Listing do
   end
 
   it 'can filter by year, make, model' do
-    camry = Listing.filter_by_year_make_model(2001, 2001, "Toyota", "Camry")
-    camry_2002 = Listing.filter_by_year_make_model(2002, 2002, "Toyota", "Camry")
+    search_params = Hash.new()
+    search_params[:min_year] = 2001
+    search_params[:max_year] = 2004
+    search_params[:make] = "Toyota"
+    search_params[:model] = "Camry"
+
+    camry = Listing.filter_by_year_make_model(search_params)
     expect(camry.count).to eq(1)
-    expect(camry_2002.count).to eq(0)
   end
 
   it 'can use scope to filter by year' do
@@ -117,4 +121,9 @@ RSpec.describe Listing do
     camry = Listing.scope_filter_by_year(2001,2001).scope_filter_by_make("Toyota").scope_filter_by_model("Camry")
     expect(camry.count).to eq(1)
   end
+
+  # it 'can only use completed parameters' do
+  #   filtered = Listing.super_scope(min_year: 2003, max_year: 2006)
+  #   expect(filtered.count).to eq(4)
+  # end
 end
