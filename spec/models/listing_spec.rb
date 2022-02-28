@@ -54,7 +54,7 @@ RSpec.describe Listing do
     expect(@listing_1.transmission).to be_a(String)
     expect(@listing_1.vin).to be_a(String)
     expect(@listing_1.state).to be_a(String)
-    expect(@listing_1.condition).to be_a(String)
+    expect(@listing_1.condition).to be_a(Float)
     expect(@listing_1.odometer).to be_a(Integer)
     expect(@listing_1.color).to be_a(String)
     expect(@listing_1.interior).to be_a(String)
