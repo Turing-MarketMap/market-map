@@ -58,10 +58,9 @@ $ rails s
    or test the whole suite with `$ rspec`
 
 ## Endpoints
-### Listings
 ### Users
 #### Create a User
-This endpoint should:
+This endpoint will:
  - Check to see if the user exists in the db or not
  - It will find or create a record and render a JSON representation of the User record
  - Endpoint is `POST /api/v1/users`
@@ -75,9 +74,16 @@ This endpoint should:
  ```
  
 #### Destroy a User
-This endpoint should:
+This endpoint will:
  - Destroy the corresponding record (if found) and any associated data
  - NOT return any JSON body at all, and should return a 204 HTTP status code
+
+### User/Listings
+#### Create a userlisting
+This endpoint will:
+ - Save a listing to a users account.
+ - It will create a record and render a JSON representation of the UserListing record
+ - Endpoint is `POST /api/v1/users/:id/listings`
 
 ## Further Project Information
  - [Turing Project Details](https://backend.turing.edu/module3/projects/consultancy/)
