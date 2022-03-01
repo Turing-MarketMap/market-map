@@ -7,7 +7,7 @@ Rails.application.routes.draw do
       # may need to update these routes to utilize sessions properly
       resources :users, only: [:create, :destroy] do
         scope module: :users do
-          resources :listings, only: [:index, :create]
+          resources :listings, only: [:index, :create, :destroy]
         end
       end
     end
