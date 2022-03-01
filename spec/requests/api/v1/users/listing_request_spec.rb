@@ -44,18 +44,27 @@ RSpec.describe 'User Listings Endpoints', type: :request do
     it 'successfully creates' do
       listing = create(:listing)
       user = create(:user)
-# binding.pry
-      params = { listing: ListingSerializer.new(listing) }
+
+      params = { listing_id: listing.id }
       headers = { 'CONTENT_TYPE' => 'application/json'}
 
       post api_v1_user_listings_path(user), headers: headers, params: JSON.generate(params)
 
-      new_user = User.last 
+      expect(response.status).to eq(201)
+      expect(parse_json[:message]).to eq("Saved listing for user.")
+    end
 
-      expect(response.status).to eq(200)
-      expect(new_user.first_name).to eq(params[:first_name])
-      expect(new_user.last_name).to eq(params[:last_name])
-      expect(new_user.email).to eq(params[:email])
+    it 'fails to save' do 
+      listing = create(:listing)
+      user = create(:user)
+
+      params = { listing_id: 0 }
+      headers = { 'CONTENT_TYPE' => 'application/json'}
+
+      post api_v1_user_listings_path(user), headers: headers, params: JSON.generate(params)
+
+      expect(response.status).to eq(404)
+      expect(parse_json[:message]).to eq("Couldn't find Listing with 'id'=0")
     end
   end
 end
