@@ -6,6 +6,14 @@ class Api::V1::Users::ListingsController < ApplicationController
   end
 
   def create 
-    binding.pry
+    user = User.find(params[:user_id])
+    listing = Listing.find(params[:listing_id])
+    ul = UserListing.create(user: user, listing: listing)
+
+    if ul.valid?
+      render json: {message: 'Saved listing for user.'}, status: :created
+    else
+      json_response(ul.errors, :unprocessable_entity)
+    end
   end
 end
