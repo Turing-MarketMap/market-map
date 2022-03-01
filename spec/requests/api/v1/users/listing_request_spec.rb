@@ -67,4 +67,23 @@ RSpec.describe 'User Listings Endpoints', type: :request do
       expect(parse_json[:message]).to eq("Couldn't find Listing with 'id'=0")
     end
   end
+
+  describe 'destroys a users listing' do 
+    it 'successfully destroys a user listing' do 
+      listing = create(:listing)
+      user = create(:user)
+
+      params = { listing_id: listing.id }
+      headers = { 'CONTENT_TYPE' => 'application/json'}
+
+      post api_v1_user_listings_path(user), headers: headers, params: JSON.generate(params)
+    
+      ul_count = UserListing.count
+
+      delete api_v1_user_listing_path(user, listing)
+      
+      expect(response.status).to eq(204)
+      expect(UserListing.count).to eq(ul_count - 1)
+    end
+  end
 end
