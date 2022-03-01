@@ -6,8 +6,9 @@ Rails.application.routes.draw do
       resources :listings
       # may need to update these routes to utilize sessions properly
       resources :users, only: [:create, :destroy] do
-        # resources :listings, only: :index
-        get '/listings', to: 'users/listings#index'
+        scope module: :users do
+          resources :listings, only: [:index, :create]
+        end
       end
     end
   end
