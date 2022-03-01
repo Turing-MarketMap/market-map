@@ -27,6 +27,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'sprockets', '~> 3.7.2'
 gem 'email_validator'
 gem 'faraday'
+gem 'jsonapi-serializer'
 
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
@@ -43,7 +44,6 @@ group :development, :test do
   gem 'launchy'
   gem 'simplecov', require: false, group: :test
   gem 'figaro'
-  gem 'jsonapi-serializer'
 end
 
 group :development do
