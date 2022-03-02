@@ -13,6 +13,10 @@ class Api::V1::ListingsController < ApplicationController
     end
   end
 
+  def show
+    json_response(ListingSerializer.new(Listing.find(params[:id])))
+  end
+
   private
 
   def search_params
