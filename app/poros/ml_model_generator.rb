@@ -20,10 +20,10 @@ class MlModelGenerator
 
   def self.create_ml_for_all_models(file_path)
     df = MlModelGenerator.get_car_data(file_path)
-    models = df.unique(:model)[:model].to_a
+    models = df.uniq(:model)[:model].to_a
 
     models.each do |model_name|
-      model_data = data.filter(:row) do |row|
+      model_data = df.filter(:row) do |row|
         row[:model] == model_name
       end
       MlModelGenerator.create_ml(model_name, model_data)
