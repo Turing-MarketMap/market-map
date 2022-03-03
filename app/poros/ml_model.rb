@@ -37,7 +37,7 @@ class MlModel
   end
 
   def predict_price_from_mileage(input)
-    @net.run([input.to_f/@input_max]) * @output_max
+    @net.run([input.to_f/@input_max])[0] * @output_max
   end
 
   # load trained model and max_data and create new MlModel object.
@@ -47,13 +47,12 @@ class MlModel
 
     new_model = MlModel.new(file_name)
     new_model.file_name = file_name
-    new_model.net = RubyFann::Standard.new(filename: "#{location}/#{filename}.net")
+    new_model.net = RubyFann::Standard.new(filename: "#{model_location}/#{file_name}.net")
 
     max_data = CSV.read("#{max_data_location}/#{file_name}_max_data.csv")
-    max_data_array = CSV.parse(max_data)
 
-    new_model.input_max = max_data_array[1][0]
-    new_model.output_max = max_data_array[1][1]
+    new_model.input_max = max_data[1][0].to_f
+    new_model.output_max = max_data[1][1].to_f
     new_model
   end
 end
