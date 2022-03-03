@@ -43,8 +43,9 @@ RSpec.describe 'ml_model' do
       expect(loaded_ml.predict_price_from_mileage([40000])[0]).to be_a(Float)
     end
 
-    it "returns an array of predictions for an array of inputs" do
+    it "returns an array of predictions for an array of input arrays" do
       expect(loaded_ml.predict_price_from_mileage([10000, 40000])).to be_a(Array)
+      expect(loaded_ml.predict_price_from_mileage([10000, 40000]).count).to eq(2)
       expect(loaded_ml.predict_price_from_mileage([10000, 40000]).sample(1)[0]).to be_a(Float)
     end
   end
