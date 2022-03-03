@@ -38,8 +38,14 @@ RSpec.describe 'ml_model' do
   end
 
   describe 'predict_price_from_mileage' do
-    it "returns correct prediction" do
-      expect(loaded_ml.predict_price_from_mileage(40000)).to be_a(Float)
+    it "returns prediction for a single value" do
+      expect(loaded_ml.predict_price_from_mileage(40000)).to be_a(Array)
+      expect(loaded_ml.predict_price_from_mileage(40000)[0]).to be_a(Float)
+    end
+
+    it "returns an array of predictions for an array of inputs" do
+      expect(loaded_ml.predict_price_from_mileage(40000)).to be_a(Array)
+      expect(loaded_ml.predict_price_from_mileage(40000).sample(1)[0]).to be_a(Float)
     end
   end
 end

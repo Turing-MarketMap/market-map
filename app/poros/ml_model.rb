@@ -37,7 +37,9 @@ class MlModel
   end
 
   def predict_price_from_mileage(input)
-    @net.run([input.to_f/@input_max])[0] * @output_max
+    scaled_input = input.to_f/@input_max
+    predictions = @net.run([scaled_input])
+    predictions.map { |prediction| prediction * @output_max} 
   end
 
   # load trained model and max_data and create new MlModel object.
