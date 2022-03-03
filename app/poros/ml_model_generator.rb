@@ -1,4 +1,5 @@
 class MlModelGenerator
+  require_relative 'ml_model'
   require 'daru'
   require 'ruby-fann'
   require 'csv'
@@ -11,7 +12,7 @@ class MlModelGenerator
 
 
   def self.create_ml(file_name, data)
-    ml = MlModel.new(file_name, model_data)
+    ml = MlModel.new(file_name, data)
     ml.train()
     ml.save
   end
@@ -32,9 +33,10 @@ class MlModelGenerator
 
   def self.create_ml_for_model(model_name, file_path)
     df = MlModelGenerator.get_car_data(file_path)
-    model_data = data.filter(:row) do |row|
+    model_data = df.filter(:row) do |row|
       row[:model] == model_name
     end
     MlModelGenerator.create_ml(model_name, model_data)
   end
+  require "pry"; binding.pry
 end

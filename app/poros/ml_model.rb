@@ -8,7 +8,7 @@ class MlModel
   # accept daru dataframe inputs and outputs and auto-format data
   def initialize(file_name, data = nil)
     @file_name = file_name
-    if data[:odometer] && data[:sellingprice]
+    if data && data[:odometer] && data[:sellingprice]
       @input_max = data[:odometer].max.to_f
       @output_max = data[:sellingprice].max.to_f
 
@@ -36,8 +36,8 @@ class MlModel
     @net = RubyFann::Standard.new(filename: "#{location}/#{filename}.net")
   end
 
-  def predict(input)
-    @net.run([input]) * @output_max
+  def predict_price_from_mileage(input)
+    @net.run([input.to_f/@input_max]) * @output_max
   end
 
   # load trained model and max_data and create new MlModel object.
@@ -54,5 +54,6 @@ class MlModel
 
     new_model.input_max = max_data_array[1][0]
     new_model.output_max = max_data_array[1][1]
+    new_model
   end
 end
