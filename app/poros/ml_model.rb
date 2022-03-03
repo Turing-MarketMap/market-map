@@ -46,8 +46,8 @@ class MlModel
 
   def predict_price_from_mileage(input)
     # normalize input values, predict, and then scale up to match original data
-    scaled_input = input.to_f/@input_max
-    predictions = @net.run([scaled_input])
+    scaled_input = input.map{ |mileage| mileage.to_f/@input_max }
+    predictions = @net.run(scaled_input)
     predictions.map { |prediction| prediction * @output_max}
   end
 
