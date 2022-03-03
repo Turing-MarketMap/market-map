@@ -10,6 +10,7 @@ RSpec.describe 'fair price api' do
 
       it "gets an array of prediction values" do
         get "/api/v1/fair_price#{query}"
+        # "/api/v1/fair_price?model=Impreza&mileage[]=10000&mileage[]=50000"
         json = parse_json
         data = json[:data]
 
