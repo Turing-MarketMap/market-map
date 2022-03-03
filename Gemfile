@@ -28,6 +28,8 @@ gem 'sprockets', '~> 3.7.2'
 gem 'email_validator'
 gem 'faraday'
 gem 'jsonapi-serializer'
+gem 'ruby-fann'
+gem 'daru'
 
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
