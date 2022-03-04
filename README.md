@@ -229,8 +229,8 @@ $ rails s
     }
   } ...
 ```
-- Destroy User
-  - Delete a users account.
+- Destroy User's Listing
+  - Delete a specified listing for a user.
   - Example Request: `DELETE https://https://consultancy-be.herokuapp.com/api/v1/users/:user_id/listings`
   - Required Params:
     - `user_id` User ID - data type `integer` - currently signed in user id
