@@ -15,6 +15,7 @@
 ## Backend Features
 - Exposing internal APIs for Market Map's Frontend.
 - Import simulated db with a CSV file (could also be replaced by consuming a third party API)
+- Implement CircleCI
 - Build a project with Service Oriented Architecture (SOA)
 - Train and deploy a series of ANN regressors that predict the expected price of a specific car model.
 
