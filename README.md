@@ -16,6 +16,7 @@
 - Exposing internal APIs for Market Map's Frontend.
 - Import simulated db with a CSV file (could also be replaced by consuming a third party API)
 - Build a project with Service Oriented Architecture (SOA)
+- Train and deploy a series of ANN regressors that predict the expected price of a specific car model.
 
 ## Requirements and Setup (for Mac):
 ### Ruby and Rails
@@ -29,6 +30,8 @@
 - factory_bot_rails
 - faker
 - jsonapi-serializer
+- ruby-fann
+- daru
 
 ### Setup
 1. Fork and/or Clone this Repo from GitHub.
@@ -94,6 +97,13 @@ This endpoint will:
  - Save a listing to a users account.
  - It will create a record and render a JSON representation of the UserListing record
  - Endpoint is `POST /api/v1/users/1/listings`
+
+#### Fair Price Trendline
+This endpoint will:
+ - Return the predicted price of a given model at a given mileage.
+ - Endpoint is `GET /api/v1/fair_price`
+ - Accept the params of `{model: "Outback", mileage: [10000, 50000, 100000]}`
+ - Response is a json tha includes an array of integers representing price.
 
 ## Further Project Information
  - [Turing Project Details](https://backend.turing.edu/module3/projects/consultancy/)
