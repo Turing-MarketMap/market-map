@@ -237,8 +237,8 @@ $ rails s
     - `listing_id` Listing ID - data type `integer` - listing ID to be added to users saved listings
   - HTTP Response 204.
 
-#### Fair Price Trendline
-This endpoint will:
+### Fair Price Trendline
+- Get FairPrice
  - Return the predicted price of a given model at a given mileage.
  - Endpoint is `GET /api/v1/fair_price`
  - Accept the params of `{model: "Outback", mileage: [10000, 50000, 100000]}`
