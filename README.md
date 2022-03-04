@@ -4,7 +4,7 @@
 ![PRs](https://img.shields.io/github/issues-pr-closed/Turing-MarketMap/market-map)
 ![rspec](https://img.shields.io/gem/v/rspec?color=blue&label=rspec)
 ![simplecov](https://img.shields.io/gem/v/simplecov?color=blue&label=simplecov) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/contributors-4-orange.svg?style=flat)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/contributors-6-orange.svg?style=flat)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
@@ -12,11 +12,9 @@
 
 "MarketMap" is a group project built over the course of two weeks in Turing's module 3 backend program. This project is a branch of Turing's Consultancy project. We pitched a rough concept of creating an application that would let a user search for cars and enable them to know if they were getting a good deal based on several factors. See below for more details on the backend features.
 
-## Backend Features:
-
-## Learning Goals
-- Practice exposing API's.
-- Practice consuming API's
+## Backend Features
+- Exposing internal APIs for Market Map's Frontend.
+- Import simulated db with a CSV file (could also be replaced by consuming a third party API)
 - Build a project with Service Oriented Architecture (SOA)
 
 ## Requirements and Setup (for Mac):
@@ -78,15 +76,24 @@ This endpoint will:
  - Destroy the corresponding record (if found) and any associated data
  - NOT return any JSON body at all, and should return a 204 HTTP status code
 
+### Listings
+#### Search Listings
+This endpoint will:
+ - Find all listings that match the given params.
+ - Endpoint is `GET /api/v1/listings/search`
+ - Accept the params of `{min_year: 2001, max_year: 2004, make: "Toyota", model: "Camry"}`
+ - Response 
+
 ### User/Listings
 #### Create a userlisting
 This endpoint will:
  - Save a listing to a users account.
  - It will create a record and render a JSON representation of the UserListing record
- - Endpoint is `POST /api/v1/users/:id/listings`
+ - Endpoint is `POST /api/v1/users/1/listings`
 
 ## Further Project Information
  - [Turing Project Details](https://backend.turing.edu/module3/projects/consultancy/)
+ - [Heroku Base URL](https://consultancy-be.herokuapp.com/) (Must add on the rest of the url to see example JSON)
 
 ## **Contributors** ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
