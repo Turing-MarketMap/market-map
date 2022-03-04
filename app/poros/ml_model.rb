@@ -57,8 +57,8 @@ class MlModel
   def self.load_MlModel(file_name)
     # load trained model and max_data and return new MlModel object.
     # this object will not have the raw data used for training, but it will be able to make predictions.
-    model_location = "db/ml/v1/models"
-    max_data_location = "db/ml/v1/max_data"
+    model_location = "db/ml/v2/models"
+    max_data_location = "db/ml/v2/max_data"
 
     new_model = MlModel.new(file_name)
     new_model.file_name = file_name
