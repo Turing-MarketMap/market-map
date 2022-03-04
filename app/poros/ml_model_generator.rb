@@ -24,7 +24,7 @@ class MlModelGenerator
 
     models.each do |model_name|
       model_data = df.filter(:row) do |row|
-        row[:model] == model_name
+        row[:model] == model_name && row[:odometer] > 2
       end
       MlModelGenerator.create_ml(model_name, model_data)
     end
@@ -34,11 +34,11 @@ class MlModelGenerator
   def self.create_ml_for_model(model_name, file_path)
     df = MlModelGenerator.get_car_data(file_path)
     model_data = df.filter(:row) do |row|
-      row[:model] == model_name
+      row[:model] == model_name && row[:odometer] > 2
     end
     MlModelGenerator.create_ml(model_name, model_data)
   end
 
-  # Include pry to allow CLI access to functions. 
+  # Include pry to allow CLI access to functions.
   require "pry"; binding.pry
 end

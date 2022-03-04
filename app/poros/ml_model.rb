@@ -33,14 +33,14 @@ class MlModel
 
   def save
     # save the nueral net and the max data in order to scale predictions from 0-1 to a more meaningful value
-    model_location = "db/ml/v1/models"
-    max_data_location = "db/ml/v1/max_data"
+    model_location = "db/ml/v2/models"
+    max_data_location = "db/ml/v2/max_data"
     @net.save("#{model_location}/#{@file_name}.net")
     File.write("#{max_data_location}/#{@file_name}_max_data.csv", [['input max', 'output max'],[@input_max, @output_max]].map(&:to_csv).join)
   end
 
   def load_net(filename)
-    location = "db/ml/v1/models"
+    location = "db/ml/v2/models"
     @net = RubyFann::Standard.new(filename: "#{location}/#{filename}.net")
   end
 
@@ -57,8 +57,8 @@ class MlModel
   def self.load_MlModel(file_name)
     # load trained model and max_data and return new MlModel object.
     # this object will not have the raw data used for training, but it will be able to make predictions.
-    model_location = "db/ml/v1/models"
-    max_data_location = "db/ml/v1/max_data"
+    model_location = "db/ml/v2/models"
+    max_data_location = "db/ml/v2/max_data"
 
     new_model = MlModel.new(file_name)
     new_model.file_name = file_name
