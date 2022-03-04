@@ -55,6 +55,10 @@ $ rails s
  ```
    or test the whole suite with `$ rspec`
 
+## Database Schema
+<img width="990" alt="Screen Shot 2022-03-03 at 8 42 11 PM" src="https://user-images.githubusercontent.com/83426676/156695189-dac08144-b2b1-4e72-8295-b526e219add2.png">
+
+
 ## Endpoints
 ### Users
 #### Create a User
