@@ -9,6 +9,7 @@
 #Import packages
 require 'daru'
 require 'ruby-fann'
+require 'csv'
 
 # Gather pre-cleaned data
 full_dataset = Daru::DataFrame.from_csv "db/data/cleaned_car_prices_10k.csv", { headers: true, header_converters: CSV::HeaderConverters[:symbol] }
