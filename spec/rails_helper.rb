@@ -83,8 +83,8 @@ end
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
   config.hook_into :webmock
-  config.filter_sensitive_data('<encrypted_key>') { ENV['image_api_key'] }
-  config.filter_sensitive_data('<encrypted_key>') { ENV['google_client_id'] }
-  config.filter_sensitive_data('<encrypted_key>') { ENV['client_secret_id'] }
+  config.filter_sensitive_data('<encrypted_image_key>') { ENV['image_api_key'] }
+  config.filter_sensitive_data('<encrypted_google_client_key>') { ENV['google_client_id'] }
+  config.filter_sensitive_data('<encrypted_client_secret_id>') { ENV['client_secret_id'] }
   config.configure_rspec_metadata!
 end
