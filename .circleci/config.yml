@@ -14,12 +14,25 @@ jobs:
     docker:
       - image: cimg/ruby:2.7.2
     executor: ruby/default
+    parallelism: 3
     steps:
       - checkout
       - run:
           name: Install Dependencies
           command: bundle install
-
+      - run:
+          name: Create Database
+          command: bundle exec rake db:create
+      - run:
+          name: Load Database
+          command: bundle exec rake import_listings_csv
+      - run:
+          name: Run RSpec Tests
+          command: |
+            TESTFILES=$(circleci tests glob "spec/**/*_spec.rb" |
+              circleci tests split)
+            bundle exec rspec - ${TESTFILES}
+      
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 # workflows:
