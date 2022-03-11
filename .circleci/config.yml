@@ -21,8 +21,8 @@ jobs:
           name: Install Dependencies
           command: bundle install
       - run:
-          name: Create Database
-          command: bundle exec rake db:create
+          name: Migrate Database
+          command: bundle exec rake db:{drop,migrate,create}
       - run:
           name: Load Database
           command: bundle exec rake import_listings_csv
