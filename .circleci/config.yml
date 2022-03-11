@@ -21,6 +21,9 @@ jobs:
           name: Install Dependencies
           command: bundle install
       - run:
+          name: Boot Up Server
+          command: dockerize -wait tcp://localhost:3000 -timeout 1m
+      - run:
           name: Migrate Database
           command: bundle exec rake db:{drop,migrate,create}
       - run:
