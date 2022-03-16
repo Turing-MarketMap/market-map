@@ -60,6 +60,7 @@ group :test do
   gem 'vcr'
   gem 'faker'
   gem 'factory_bot_rails'
+    gem 'rspec_junit_formatter'
 end
 
 
