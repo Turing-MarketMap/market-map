@@ -64,7 +64,7 @@ jobs:
           command: bundle exec rails db:schema:load --trace
       - run: 
           name: Rake CSV File
-          command: rake import_listings_csv
+          command: bundle exec rake import_listings_csv
       # Run rspec in parallel
       - ruby/rspec-test
 
