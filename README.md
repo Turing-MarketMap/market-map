@@ -10,12 +10,14 @@
 
 ## Background & Description:
 
-"MarketMap" is a group project built over the course of two weeks in Turing's module 3 backend program. This project is a branch of Turing's Consultancy project. We pitched a rough concept of creating an application that would let a user search for cars and enable them to know if they were getting a good deal based on several factors. See below for more details on the backend features.
+"MarketMap" is a group project built over the course of 10 days in Turing's module 3 backend program. This project is a branch of Turing's Consultancy project. We pitched a rough concept of creating an application that would let a user search for cars listings and enable them to know if they were getting a good deal based other listings across the United States. See below for more details on the backend features.
 
 ## Backend Features
 - Exposing internal APIs for Market Map's Frontend.
 - Import simulated db with a CSV file (could also be replaced by consuming a third party API)
+- Implement CircleCI
 - Build a project with Service Oriented Architecture (SOA)
+- Train and deploy a series of ANN regressors that predict the expected price of a specific car model.
 
 ## Requirements and Setup (for Mac):
 ### Ruby and Rails
@@ -29,6 +31,8 @@
 - factory_bot_rails
 - faker
 - jsonapi-serializer
+- ruby-fann
+- daru
 
 ### Setup
 1. Fork and/or Clone this Repo from GitHub.
@@ -58,42 +62,187 @@ $ rails s
 ## Database Schema
 <img width="990" alt="Screen Shot 2022-03-03 at 8 42 11 PM" src="https://user-images.githubusercontent.com/83426676/156695189-dac08144-b2b1-4e72-8295-b526e219add2.png">
 
-
-## Endpoints
-### Users
-#### Create a User
-This endpoint will:
- - Check to see if the user exists in the db or not
- - It will find or create a record and render a JSON representation of the User record
- - Endpoint is `POST /api/v1/users`
- - accept the following JSON body with only the following fields:
+## Internal API Endpoints
+### Listings
+ - Search (All Listings)
+   - View listings (with optional filters)
+   - Params:
+     - `min_year` Minimum Year - data type `integer` - set by params
+     - `max_year` Maximum Year - data type `integer` - set by params
+     - `make` Car Make - data type `string` - set by params
+     - `model` Car Model - data type `string` - set by params
+   - Example params: `{min_year: 2001, max_year: 2004, make: "Toyota", model: "Camry"}`
+   - Example HTTP Request: `GET https://consultancy-be.herokuapp.com/api/v1/listings/search`
+   - HTTP Response 200.
+   - Example Response:
 ```json
 {
-  "first_name": "John",
-  "last_name": "Doe",
-  "email": "jdoe@gmail.com"
+  "data": [
+    {
+      "id": "1",
+      "type": "listing",
+      "attributes": {
+        "year": 2014,
+        "make": "Acura",
+        "model": "ILX",
+        "trim": "Technology Package",
+        "body": "Sedan",
+        "transmission": "automatic",
+        "vin": "19vde1f70ee008913",
+        "state": "ca",
+        "condition": 2.5,
+        "odometer": 9051,
+        "color": "gray",
+        "interior": "black",
+        "sellingprice": 21250
+       }
+    },
+    {
+      "id": "2",
+      "type": "listing",
+      "attributes": {
+        "year": 2014,
+        "make": "Acura",
+        "model": "MDX",
+        "trim": "Advance and Entertainment Packages",
+        "body": "SUV",
+        "transmission": "automatic",
+        "vin": "5fryd3h83eb011004",
+        "state": "ca",
+        "condition": 4.9,
+        "odometer": 21523,
+        "color": "white",
+        "interior": "gray",
+        "sellingprice": 41500
+      }
+     },...
+```
+
+- Show (Get Listing)
+   - View a listing (with optional filters)
+   - Example HTTP Request: `GET https://consultancy-be.herokuapp.com/api/v1/listings/:id`
+   - HTTP Response 200.
+   - Example Response:
+```json
+{
+  "data": {
+    "id": "1",
+    "type": "listing",
+    "attributes": {
+      "year": 2014,
+      "make": "Acura",
+      "model": "ILX",
+      "trim": "Technology Package",
+      "body": "Sedan",
+      "transmission": "automatic",
+      "vin": "19vde1f70ee008913",
+      "state": "ca",
+      "condition": 2.5,
+      "odometer": 9051,
+      "color": "gray",
+      "interior": "black",
+      "sellingprice": 21250
+      }
+    }
 }
- ```
- 
-#### Destroy a User
-This endpoint will:
- - Destroy the corresponding record (if found) and any associated data
- - NOT return any JSON body at all, and should return a 204 HTTP status code
+```
 
-### Listings
-#### Search Listings
-This endpoint will:
- - Find all listings that match the given params.
- - Endpoint is `GET /api/v1/listings/search`
- - Accept the params of `{min_year: 2001, max_year: 2004, make: "Toyota", model: "Camry"}`
- - Response 
+### Users
+- Find/Create User
+  - Verifies if the user exists in the DB, if it exists return user data.
+  - If the user does not exist, create a new DB entry and return confirmation and new user data.
+  - Required Params:
+    - `email` User Email - data type `string` - set by params
+    - `first_name` User first name - data type `string` - set by params
+    - `last_name` User last name - data type `string` - set by params
+  - Example Params: `{"first_name": "John", "last_name": "Doe", "email": "jdoe@gmail.com"}`
+  - Example HTTP Request: `POST https://https://consultancy-be.herokuapp.com/api/v1/users`
+  - HTTP Response 200.
+  - Example Response:
+```json
+{
+  "data": {
+    "id": "1",
+    "type": "user",
+    "attributes": {
+      "first_name": "Tommy",
+      "last_name":"Bartell",
+      "email": "bartell_tommy@example.net"
+    }
+  }
+}
+```
 
-### User/Listings
-#### Create a userlisting
-This endpoint will:
- - Save a listing to a users account.
- - It will create a record and render a JSON representation of the UserListing record
- - Endpoint is `POST /api/v1/users/1/listings`
+- Destroy User
+  - Destroy the corresponding record (if found) and any associated data
+  - Required Params:
+    - `id` User ID - data type `string` - set by params
+  - Example Request: `DELETE https://https://consultancy-be.herokuapp.com/users/:id`
+  - HTTP Response 204.
+
+### UserListings
+- Create User Listing
+  - Save a listing to a users account.
+  - It will create a record and render a JSON representation of the UserListing record
+  - Required Params:
+    - `user_id` User ID - data type `integer` - currently signed in user id
+    - `listing_id` Listing ID - data type `integer` - listing ID to be added to users saved listings
+  - Example HTTP Request: `POST https://https://consultancy-be.herokuapp.com/api/v1/users/:user_id/listings`
+  - HTTP Response 200.
+  - Example Response:
+```json
+{
+  "data": [{
+    "id": "1",
+    "type": "listing",
+    "attributes": {
+      "year": 2014,
+      "make": "Acura",
+      "model": "ILX",
+      "trim": "Technology Package",
+      "body":"Sedan",
+      "transmission": "automatic",
+      "vin": "19vde1f70ee008913",
+      "state": "ca",
+      "condition": 2.5,
+      "odometer": 9051,
+      "color": "gray",
+      "interior": "black",
+      "sellingprice": 21250
+      }
+    }, {
+    "id": "1",
+    "type": "listing",
+    "attributes": {
+      "year": 2014,
+      "make": "Acura",
+      "model": "ILX",
+      "trim": "Technology Package",
+      "body": "Sedan", "transmission": "automatic",
+      "vin": "19vde1f70ee008913",
+      "state": "ca",
+      "condition": 2.5,
+      "odometer": 9051,
+      "color": "gray",
+      "interior": "black",
+      "sellingprice": 21250
+    }
+  } ...
+```
+- Destroy User's Listing
+  - Delete a specified listing for a user.
+  - Example Request: `DELETE https://https://consultancy-be.herokuapp.com/api/v1/users/:user_id/listings`
+  - Required Params:
+    - `user_id` User ID - data type `integer` - currently signed in user id
+    - `listing_id` Listing ID - data type `integer` - listing ID to be added to users saved listings
+  - HTTP Response 204.
+
+### Fair Price Trendline
+- Get FairPrice
+ - Return the predicted price of a given model at a given mileage.
+ - Endpoint is `GET /api/v1/fair_price`
+ - Accept the params of `{model: "Outback", mileage: [10000, 50000, 100000]}`
+ - Response is a json tha includes an array of integers representing price.
 
 ## Further Project Information
  - [Turing Project Details](https://backend.turing.edu/module3/projects/consultancy/)
