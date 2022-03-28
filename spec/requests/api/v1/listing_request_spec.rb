@@ -17,7 +17,7 @@ RSpec.describe 'Listings API', type: :request do
     end
   end
 
-  describe '/listings/new' do
+  describe 'create new listing POST /api/vi/listings' do
     context 'good params' do
       describe 'create a listing' do
         it 'successfully creates' do
@@ -67,6 +67,58 @@ RSpec.describe 'Listings API', type: :request do
           expect(response.status).to eq(422)
           expect(parse_json[:errors]).to eq("Model can't be blank, Odometer can't be blank, Odometer is not a number, Sellingprice can't be blank, and Sellingprice is not a number")
         end
+      end
+    end
+  end
+
+  describe 'edit listing PATCH /api/v1/listings/listing_id' do
+    context 'listing exists' do
+      it "updates the listing" do
+        listing = create(:listing, year: 2022)
+        params = { year: 2000}
+        headers = { 'CONTENT_TYPE' => 'application/json'}
+
+        patch "/api/v1/listings/#{listing.id}", headers: headers, params: JSON.generate(listing: params)
+
+        expect(response.status).to eq(200)
+        expect(listing.reload.year).to eq(2000)
+      end
+    end
+    context 'listings does not exist' do
+      it "returns correct error message" do
+        params = { year: 2000}
+        headers = { 'CONTENT_TYPE' => 'application/json'}
+
+        patch "/api/v1/listings/10000000", headers: headers, params: JSON.generate(listing: params)
+
+        expect(response.status).to eq(404)
+        expect(parse_json[:message]).to eq("Couldn't find Listing with 'id'=10000000")
+      end
+    end
+
+    context 'bad param titles' do
+      it "returns correct error message" do
+        listing = create(:listing, year: 2022)
+        params = { yr: 2000}
+        headers = { 'CONTENT_TYPE' => 'application/json'}
+
+        patch "/api/v1/listings/#{listing.id}", headers: headers, params: JSON.generate(listing: params)
+
+        expect(response.status).to eq(422)
+        expect(parse_json[:errors]).to eq("Parameters either incorrect or missing")
+      end
+    end
+
+    context 'bad param values' do
+      it "returns correct error message" do
+        listing = create(:listing, year: 2022)
+        params = { year: 'abc'}
+        headers = { 'CONTENT_TYPE' => 'application/json'}
+
+        patch "/api/v1/listings/#{listing.id}", headers: headers, params: JSON.generate(listing: params)
+
+        expect(response.status).to eq(404)
+        expect(parse_json[:errors]).to eq("Year is not a number")
       end
     end
   end

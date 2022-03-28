@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/listings/search', to: 'listings#search'
       get '/fair_price', to: 'fair_price#predict'
-      resources :listings, only: [:index, :show, :create]
+      resources :listings, only: [:index, :show, :create, :update]
       # may need to update these routes to utilize sessions properly
       resources :users, only: [:create, :destroy] do
         scope module: :users do

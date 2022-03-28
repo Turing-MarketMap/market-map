@@ -27,6 +27,18 @@ class Api::V1::ListingsController < ApplicationController
     end
   end
 
+  def update
+    listing = Listing.find(params[:id])
+
+    if new_params == {}
+      json_response({errors: "Parameters either incorrect or missing"}, :unprocessable_entity)
+    elsif listing.update(new_params)
+      json_response(ListingSerializer.new(listing))
+    else
+      json_response({errors: listing.errors.full_messages.to_sentence}, :not_found)
+    end
+  end
+
   private
 
   def search_params
