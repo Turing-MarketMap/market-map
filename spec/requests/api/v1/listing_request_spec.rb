@@ -21,7 +21,8 @@ RSpec.describe 'Listings API', type: :request do
     context 'good params' do
       describe 'create a listing' do
         it 'successfully creates' do
-          params = { year: 2022, make: 'Mazda', model: 'Mazda3', odometer: 20000, sellingprice: 18000  }
+          user = create(:user)
+          params = { user_id: user.id, year: 2022, make: 'Mazda', model: 'Mazda3', odometer: 20000, sellingprice: 18000  }
           headers = { 'CONTENT_TYPE' => 'application/json'}
 
           post api_v1_listings_path, headers: headers, params: JSON.generate(listing: params)
@@ -34,6 +35,11 @@ RSpec.describe 'Listings API', type: :request do
           expect(new_listing.model).to eq(params[:model])
           expect(new_listing.odometer).to eq(params[:odometer])
           expect(new_listing.sellingprice).to eq(params[:sellingprice])
+
+          new_user_listing = UserListing.last
+
+          expect(new_user_listing.user_id).to eq(params[:user_id])
+          expect(new_user_listing.listing_id).to eq(new_listing.id)
         end
       end
     end

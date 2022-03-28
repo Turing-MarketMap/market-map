@@ -19,8 +19,8 @@ class Api::V1::ListingsController < ApplicationController
 
   def create
     listing = Listing.create(new_params)
-
     if listing.id
+      UserListing.create(user_id: params[:listing][:user_id], listing_id: listing.id)
       json_response(ListingSerializer.new(Listing.last))
     else
       json_response({errors: listing.errors.full_messages.to_sentence}, :unprocessable_entity)
