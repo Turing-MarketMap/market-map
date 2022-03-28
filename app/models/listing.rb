@@ -4,7 +4,6 @@ class Listing < ApplicationRecord
 
   validates_presence_of :year, :make, :model, :odometer, :sellingprice
   validates_numericality_of :year, greater_than: 0, only_integer: true
-  validates_numericality_of :condition, greater_than_or_equal_to: 0, less_than_or_equal_to: 5
   validates_numericality_of :odometer, greater_than_or_equal_to: 0, only_integer: true
   validates_numericality_of :sellingprice, greater_than: 0, only_integer: true
 

@@ -17,9 +17,23 @@ class Api::V1::ListingsController < ApplicationController
     json_response(ListingSerializer.new(Listing.find(params[:id])))
   end
 
+  def create
+    listing = Listing.create(new_params)
+
+    if listing.id
+      json_response(ListingSerializer.new(Listing.last))
+    else
+      json_response({errors: listing.errors.full_messages.to_sentence}, :unprocessable_entity)
+    end
+  end
+
   private
 
   def search_params
     params.require(:search_params).permit(:min_year, :max_year, :make, :model)
+  end
+
+  def new_params
+    params.require(:listing).permit(:year, :make, :model, :trim, :body, :transmission, :vin, :state, :condition, :odometer, :color, :interior, :sellingprice)
   end
 end

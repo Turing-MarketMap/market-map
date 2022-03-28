@@ -17,6 +17,54 @@ RSpec.describe 'Listings API', type: :request do
     end
   end
 
+  describe '/listings/new' do
+    context 'good params' do
+      describe 'create a listing' do
+        it 'successfully creates' do
+          params = { year: 2022, make: 'Mazda', model: 'Mazda3', odometer: 20000, sellingprice: 18000  }
+          headers = { 'CONTENT_TYPE' => 'application/json'}
+
+          post api_v1_listings_path, headers: headers, params: JSON.generate(listing: params)
+
+          new_listing = Listing.last
+
+          expect(response.status).to eq(200)
+          expect(new_listing.year).to eq(params[:year])
+          expect(new_listing.make).to eq(params[:make])
+          expect(new_listing.model).to eq(params[:model])
+          expect(new_listing.odometer).to eq(params[:odometer])
+          expect(new_listing.sellingprice).to eq(params[:sellingprice])
+        end
+      end
+    end
+
+    context 'bad params' do
+      describe 'correct error response' do
+        it 'has no params to create listing' do
+          params = {}
+          headers = { 'CONTENT_TYPE' => 'application/json'}
+
+          post api_v1_listings_path, headers: headers, params: JSON.generate(listing: params)
+
+          new_listing = Listing.last
+
+          expect(response.status).to eq(422)
+          expect(parse_json[:errors]).to eq("param is missing or the value is empty: listing")
+        end
+
+        it 'has some params to create listing' do
+          params = { year: 2022, make: 'Mazda' }
+          headers = { 'CONTENT_TYPE' => 'application/json'}
+
+          post api_v1_listings_path, headers: headers, params: JSON.generate(listing: params)
+
+          expect(response.status).to eq(422)
+          expect(parse_json[:errors]).to eq("Model can't be blank, Odometer can't be blank, Odometer is not a number, Sellingprice can't be blank, and Sellingprice is not a number")
+        end
+      end
+    end
+  end
+
   describe '/listings/search' do
     it 'sends all the listings' do
       create_list(:listing, 10)
