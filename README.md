@@ -10,7 +10,7 @@
 
 ## Background & Description:
 
-"MarketMap" is a group project built over the course of 10 days in Turing's module 3 backend program. This project is a branch of Turing's Consultancy project. We pitched a rough concept of creating an application that would let a user search for cars listings and enable them to know if they were getting a good deal based other listings across the United States. See below for more details on the backend features.
+"MarketMap" is a group project built over the course of 10 days in Turing's module 3 backend program. It is an application that helps users understand how much a used car should cost. It uses a data visualization to explain how the cost of various makes and models change with mileage. It leverages Neural Network regressors to predict the expected price of any vehicle and plots this "fair price" trendline to show whether a particular listing is overpriced or underpriced. Users can save their favorite listings for easy reference as they search for used cars to buy. See below for more details on the backend features.
 
 ## Backend Features
 - Exposing internal APIs for Market Map's Frontend.
